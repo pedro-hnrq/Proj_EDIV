@@ -1,6 +1,9 @@
 from pathlib import Path
 import os 
 import sys
+from decouple import config
+from django.contrib.messages import constants
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,6 +23,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DOMAIN = config('DOMAIN', cast=str)
 
 # Application definition
 
@@ -136,3 +140,22 @@ AUTH_USER_MODEL = 'authenticacao.Users'
 AUTHENTICATION_BACKENDS = (
     'authenticacao.backends.CustomBackend',
 )
+
+# Email
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # TODO: confirar envio de emails
+    pass
+
+
+# Messages
+
+MESSAGES_TAGS = {
+    constants.DEBUG: 'alert-primary',
+    constants.ERROR: 'alert-danger',
+    constants.SUCCESS: 'alert-success',
+    constants.INFO: 'alert-info',
+    constants.WARNING: 'alert-warning',
+}
