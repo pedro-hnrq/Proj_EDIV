@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from .forms import RegisterForm, AuthForm
 from django.shortcuts import redirect
@@ -60,7 +60,12 @@ def login(request):
             if auth_form.is_valid():
                 return redirect('/')
 
-        return render(request, 'login.html', {'auth_form': auth_form})
+        # # auth.login(request, services)
+        return redirect(reverse('servicos'))
+        # return render(request, 'login.html', {'auth_form': auth_form})
+
+       
+           
 
 def logout_user(request):
     logout(request)

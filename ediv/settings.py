@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     # APPS
     'authenticacao',
+    'services',
 ] 
 # MYAPPS = ['authenticacao',
 
