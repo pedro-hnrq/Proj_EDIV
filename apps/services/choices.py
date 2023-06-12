@@ -10,4 +10,4 @@ class BudgetStatus(TextChoices):
 class ServiceTags(TextChoices):
     MOTION = 'M', 'Motion design'
     EDICAO_IMAGEM = 'EI', 'Edicao de imagem'
-    EDICAO_VIDEO = 'EV', 'Edicao de vÍdeo'
+    EDICAO_VIDEO = 'EV', 'Edicao de vídeo'

@@ -59,9 +59,11 @@ def login(request):
             # Tem um usuário com esse email e senha
             if auth_form.is_valid():
                 return redirect('/')
-
+            
+        messages.add_message(request, constants.ERROR, "Email ou senha incorretos.")
+        return redirect(reverse('login'))
         # # auth.login(request, services)
-        return redirect(reverse('servicos'))
+        # return redirect(reverse('servicos'))
         # return render(request, 'login.html', {'auth_form': auth_form})
 
        
