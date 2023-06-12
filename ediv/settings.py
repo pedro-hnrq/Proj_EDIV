@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     # APPS
     'authenticacao',
     'services',
+
+    'tinymce',
 ] 
 # MYAPPS = ['authenticacao',
 

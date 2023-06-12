@@ -3,7 +3,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUpload
 from .exceptions import UploadFileException
 from secrets import token_hex
 from django.core.files.base import ContentFile
-
+from django.core.files.storage import default_storage
 
 class ChunkUploadedFile:
 
