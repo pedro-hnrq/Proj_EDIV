@@ -1,19 +1,17 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from .forms import RegisterForm, AuthForm
-from django.shortcuts import redirect
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from .models import Users
-from django.contrib.auth import get_user_model, logout
-from django.contrib.auth import login as login_auth
+from django.contrib.auth import get_user_model, logout, authenticate, login as login_auth
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.urls import reverse
 from .decorators import not_authenticated
 
-
+@not_authenticated
 def register(request):
     if request.method == 'GET':
         register_form = RegisterForm()
@@ -47,7 +45,6 @@ def active_account(request, uidb4, token):
         messages.add_message(request, constants.ERROR, "A url acessada não é válida.")
         return redirect(reverse('login'))
 
-
 @not_authenticated
 def login(request):
     if request.method == 'GET':
@@ -56,9 +53,13 @@ def login(request):
     elif request.method == 'POST':
         auth_form = AuthForm(request.POST)
         if auth_form.is_valid():
-            # Tem um usuário com esse email e senha
-            if auth_form.is_valid():
-                return redirect('/')
+            email = auth_form.cleaned_data.get('email')
+            password = auth_form.cleaned_data.get('password')
+            user = authenticate(request, username=email, password=password)
+            
+            if user is not None:
+                login_auth(request, user)
+                return redirect('/services/request_budget/')
             
         messages.add_message(request, constants.ERROR, "Email ou senha incorretos.")
         return redirect(reverse('login'))
